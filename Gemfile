@@ -29,7 +29,8 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'rspec-rails', '~> 3.8'
+  gem 'factory_bot'
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
