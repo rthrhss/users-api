@@ -30,7 +30,7 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'chromedriver-helper'
-  gem 'factory_bot'
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.8'
   gem 'selenium-webdriver'
   gem 'vcr'
