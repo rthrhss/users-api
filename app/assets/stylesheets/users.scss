@@ -1,0 +1,37 @@
+.users {
+  &__container {
+    margin: 4rem auto;
+    width: 80%;
+
+    .pagination {
+      margin-top: 1rem;
+      text-align: center;
+
+      .page {
+        margin: 0.5rem;
+      }
+    }
+  }
+
+  &__table {
+    margin: 0 auto;
+
+    th {
+      font-weight: bold;
+    }
+
+    td, th {
+      border: 1px solid #ccc;
+      line-height: 1.5;
+      padding: 0.5rem;
+    }
+  }
+
+  &__info {
+    margin: 4rem;
+
+    p {
+      padding: 1rem;
+    }
+  }
+}

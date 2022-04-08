@@ -1,1 +1,9 @@
-<p>Hello, <%= @name %></p>
+<section class='users__info'>
+  <p><%= link_to 'Back to list', users_path %></p>
+  <p><strong>ID:</strong> <%= @user.id %></p>
+  <p><strong>First Name:</strong> <%= @user.first_name %></p>
+  <p><strong>Last Name:</strong> <%= @user.last_name %></p>
+  <p><strong>Email:</strong> <%= @user.email %></p>
+  <p><strong>Status:</strong> <%= @user.status %></p>
+  <p><strong>Created At:</strong> <%= @user.created_at %></p>
+</section>
