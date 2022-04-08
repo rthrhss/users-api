@@ -43,7 +43,7 @@ $ docker-compose run users-api bin/rails users:update
 $ docker-compose up -d
 ```
 
-Afterwards, the API server will be available at http://localhost:3001/
+Afterwards, the server will be available at http://localhost:3001/
 
 ### Exploring it with `curl` and `jq`
 

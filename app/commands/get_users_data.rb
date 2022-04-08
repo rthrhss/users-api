@@ -13,6 +13,7 @@ class GetUsersData
     loop do
       response = fetch(offset)
       break if response.size < limit
+
       results += response
       offset += limit
     end
@@ -29,10 +30,12 @@ class GetUsersData
   def fetch(offset)
     response = request_for(offset).run
 
-    context.fail!(
-      code: response.code,
-      message: response.status_message
-    ) unless response.code == 200
+    unless response.code == 200
+      context.fail!(
+        code: response.code,
+        message: response.status_message
+      )
+    end
 
     JSON.parse(response.body)
   end

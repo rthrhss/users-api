@@ -6,4 +6,3 @@ namespace :users do
     UpdateUsersWorker.perform_async
   end
 end
-
