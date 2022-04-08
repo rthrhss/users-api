@@ -1,33 +1,61 @@
 version: '3'
 
 services:
-  users-db:
-    image: postgres:11
+  users-postgres:
+    image: postgres:11-alpine
     restart: always
     environment:
       POSTGRES_USER: microverse
       POSTGRES_PASSWORD: microverse
     volumes:
-      - users-db-data:/var/lib/users-db
+      - users-postgres-data:/var/lib/users-postgres
+
+  users-redis:
+    image: redis:6.2-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - users-redis-data:/data
 
   users-api:
     build:
       context: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
     environment:
-      DATABASE_HOST: users-db
+      DATABASE_HOST: users-postgres
       DATABASE_USERNAME: microverse
       DATABASE_PASSWORD: microverse
+      REDIS_URL: redis://users-redis:6379/0
       USERS_API_KEY: ${USERS_API_KEY}
     volumes:
       - .:/users-api
+      - gem-cache:/usr/local/bundle/gems
     ports:
       - "3001:3001"
     depends_on:
-      - users-db
+      - users-postgres
+      - users-redis
     tty: true
     stdin_open: true
 
+  sidekiq:
+    build:
+      context: .
+    depends_on:
+      - users-api
+      - users-postgres
+      - users-redis
+    volumes:
+      - .:/users-api
+      - gem-cache:/usr/local/bundle/gems
+    environment:
+      DATABASE_HOST: users-postgres
+      DATABASE_USERNAME: microverse
+      DATABASE_PASSWORD: microverse
+      REDIS_URL: redis://users-redis:6379/0
+      USERS_API_KEY: ${USERS_API_KEY}
+    entrypoint: ./bin/entrypoints/sidekiq.sh
 volumes:
-  users-db-data:
-    driver: local
+  gem-cache:
+  users-postgres-data:
+  users-redis-data:

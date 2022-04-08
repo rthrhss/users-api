@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
-    @page = params[:page].to_i || 1
-    @per_page = params[:per_page].to_i || 10
+    @page = params[:page] || 1
+    @per_page = params[:per_page] || 10
 
     @users = User.page(@page).per(@per_page)
     @users = @users.where(query_params) if query_params.present?
