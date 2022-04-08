@@ -1,24 +1,101 @@
-# README
+# Users API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Running with Docker Compose
 
-Things you may want to cover:
+#### Clone this repository:
 
-* Ruby version
+```bash
+$ git clone git@github.com:rthrhss/users-api.git
+$ cd users-api/
+```
 
-* System dependencies
+#### Setup your API keys
 
-* Configuration
+The app needs the `USERS_API_KEY` environment variables to be set. This can be done with a `.env` file, and a `.env.sample` has been provided.
 
-* Database creation
+#### Build the services
 
-* Database initialization
+```bash
+$ docker-compose build
+```
 
-* How to run the test suite
+#### Setup and seed the database
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+$ docker-compose run users-api bin/rails db:setup
+```
 
-* Deployment instructions
+#### Run the specs (optional)
 
-* ...
+```bash
+$ docker-compose run users-api bin/rspec
+```
+
+#### Download users' data from the API
+
+```bash
+$ docker-compose run users-api bin/rails users:update
+```
+
+#### Start the services:
+
+```bash
+$ docker-compose up -d
+```
+
+Afterwards, the API server will be available at http://localhost:3001/
+
+### Exploring it with `curl` and `jq`
+
+#### Listing users (without filtering)
+```
+$ curl http://localhost:3001/users.json | jq '.data[] | { id, email, status }'
+{
+  "id": 1,
+  "email": "juliusjohns@mcclure.net",
+  "status": "Active"
+}
+{
+  "id": 2,
+  "email": "kenheaney@hilll.io",
+  "status": "Active"
+}
+{
+  "id": 3,
+  "email": "zackaryskiles@gutkowski.name",
+  "status": "Active"
+}
+{
+  "id": 4,
+  "email": "frankzboncak@willms.net",
+  "status": "Inactive"
+}
+...
+```
+
+#### Listing users (filtering by status)
+
+```
+$ curl http://localhost:3001/users.json\?status\=Inactive | jq '.data[] | { id, email, status }'
+{
+  "id": 4,
+  "email": "frankzboncak@willms.net",
+  "status": "Inactive"
+}
+{
+  "id": 8,
+  "email": "willia@watsicaraynor.com",
+  "status": "Inactive"
+}
+{
+  "id": 12,
+  "email": "patsy@buckridgekautzer.net",
+  "status": "Inactive"
+}
+{
+  "id": 16,
+  "email": "shizue@fisher.net",
+  "status": "Inactive"
+}
+...
+```
