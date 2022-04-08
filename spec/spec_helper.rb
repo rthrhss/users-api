@@ -1,4 +1,5 @@
 require 'capybara/rspec'
+require_relative 'support/vcr'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

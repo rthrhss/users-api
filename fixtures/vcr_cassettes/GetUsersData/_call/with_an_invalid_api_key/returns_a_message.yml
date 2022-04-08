@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://microverse-api-app.herokuapp.com/users?limit=100&offset=0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+      Authorization:
+      - ''
+      Expect:
+      - ''
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '34'
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01)
+      Date:
+      - Fri, 08 Apr 2022 03:34:00 GMT
+      Via:
+      - 1.1 vegur
+    body:
+      encoding: UTF-8
+      string: '{"error":"Error, invalid API KEY"}'
+  recorded_at: Fri, 08 Apr 2022 03:34:00 GMT
+recorded_with: VCR 6.1.0
